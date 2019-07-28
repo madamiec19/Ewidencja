@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Ewidencja</string>
+
+    <string-array name="users">
+        <item>Michał Adamiec</item>
+        <item>Drajwer the best</item>
+
+    </string-array>
 </resources>

@@ -28,19 +28,20 @@
                 android:textColor="#ffffff"
                 android:text="Panel Kierowcy"/>
             <TextView
+                android:id="@+id/tvDriver"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txtDashboard"
                 android:layout_marginTop="6dp"
                 android:textSize="14sp"
                 android:textColor="#52BAFF"
-                android:text="3 ruchy"/>
+                android:text="kierowca"/>
 
             <ImageView
                 android:layout_alignParentEnd="true"
                 android:layout_width="100dp"
                 android:layout_height="62dp"
-                android:src="@drawable/menulogo"/>
+                android:src="@drawable/logo2"/>
 
         </RelativeLayout>
 
