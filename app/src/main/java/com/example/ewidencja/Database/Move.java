@@ -45,6 +45,7 @@ public class Move {
         setValue();
         setMoveTypesString();
     }
+    
 
     private void setMoveTypesString(){
         moveTypesString = "";

@@ -8,8 +8,11 @@ import androidx.lifecycle.LiveData;
 import java.util.List;
 
 public class MoveRepository {
+    private static final String TAG = "MoveRepository";
+
     private MoveDao moveDao;
     private LiveData<List<Move>> allMoves;
+
 
     public MoveRepository(Application application){
         MoveDatabase database = MoveDatabase.getInstance(application);

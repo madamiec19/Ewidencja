@@ -4,36 +4,43 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.example.ewidencja.Database.Move;
 import com.example.ewidencja.Database.MoveViewModel;
+import com.example.ewidencja.Dialogs.InitialDialog;
 
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements InitialDialog.InitialDialogListener {
 
     private MoveViewModel moveViewModel;
 
     private LinearLayout moveCard, scheduleCard, hoursCard;
+    private TextView tvDriver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        moveViewModel = ViewModelProviders.of(this).get(MoveViewModel.class);
-        moveViewModel.getAllMoves().observe(this, new Observer<List<Move>>() {
-            @Override
-            public void onChanged(List<Move> moves) {
-                //udpate recyclerview
-            }
-        });
+        SharedPreferences prefs = getSharedPreferences("prefs", MODE_PRIVATE);
+        boolean firstStart = prefs.getBoolean("firstStart", true);
+        if (firstStart) {
+            showStartDialog();
+        }
+        setButtons();
+    }
 
 
+    private void setButtons(){
         moveCard = (LinearLayout) findViewById(R.id.moveCard);
         moveCard.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,8 +74,26 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+        tvDriver = findViewById(R.id.tvDriver);
+        tvDriver.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showStartDialog();
+            }
+        });
     }
 
+    private void showStartDialog(){
+        InitialDialog initialDialog = new InitialDialog();
+        initialDialog.show(getSupportFragmentManager(), "initial dialog");
+        Globals g = Globals.getInstance();
+        tvDriver = findViewById(R.id.tvDriver);
+    }
 
-
+    @Override
+    public void applyDriver(String driver) {
+        tvDriver = findViewById(R.id.tvDriver);
+        tvDriver.setText(driver);
+    }
 }
