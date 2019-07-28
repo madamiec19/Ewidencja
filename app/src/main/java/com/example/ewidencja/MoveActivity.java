@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,9 +37,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-
 public class MoveActivity extends AppCompatActivity{
 
     public static final int ADD_MOVE_REQUEST = 1;
@@ -54,7 +50,6 @@ public class MoveActivity extends AppCompatActivity{
         setSupportActionBar(toolbar);
         setTitle("Ruchy");
 
-
         FloatingActionButton btnAddMove = findViewById(R.id.floatingAddMove);
         btnAddMove.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -64,13 +59,13 @@ public class MoveActivity extends AppCompatActivity{
             }
         });
 
-        RecyclerView recyclerView;
-        recyclerView = findViewById(R.id.recycler_view);
+        RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
 
         final MoveAdapter moveAdapter = new MoveAdapter();
         recyclerView.setAdapter(moveAdapter);
+
         moveViewModel = ViewModelProviders.of(this).get(MoveViewModel.class);
         moveViewModel.getAllMoves().observe(this, new Observer<List<Move>>() {
             @Override
@@ -79,7 +74,7 @@ public class MoveActivity extends AppCompatActivity{
             }
         });
 
-        // swiping items of recyclerview to delete
+
         new ItemTouchHelper(new ItemTouchHelper.SimpleCallback(0,
                 ItemTouchHelper.LEFT | ItemTouchHelper.RIGHT) {
             @Override
@@ -95,8 +90,6 @@ public class MoveActivity extends AppCompatActivity{
         }).attachToRecyclerView(recyclerView);
     }
 
-
-    /// adding move object to database and googlesheet
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -107,10 +100,8 @@ public class MoveActivity extends AppCompatActivity{
             int kmStop = data.getIntExtra(AddItem.EXTRA_KMSTOP, 1);
             boolean[] types = data.getBooleanArrayExtra(AddItem.EXTRA_TYPES);
             String route = data.getStringExtra(AddItem.EXTRA_ROUTE);
+            String driver = "Michał Adamiec"; //TODO! zrobić logowanie
             String comment = data.getStringExtra(AddItem.EXTRA_COMMENT);
-            String driver;
-            Globals g = Globals.getInstance();
-            driver = g.getDriver();
 
             Move move = new Move(car, kmStart, kmStop, types, driver, route, comment );
             addItemToSheet(move);
@@ -125,7 +116,7 @@ public class MoveActivity extends AppCompatActivity{
         /*final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);*/
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "https://script.google.com/macros/s/AKfycbx354ecrKPOava3Fp8WFLNtavagsyW4bVe3BoSstJxNG5M1Fd4V/exec",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "script url here",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
@@ -170,7 +161,6 @@ public class MoveActivity extends AppCompatActivity{
         queue.add(stringRequest);
     }
 
-    // create menu
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -178,7 +168,6 @@ public class MoveActivity extends AppCompatActivity{
         return true;
     }
 
-    // menu options
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
