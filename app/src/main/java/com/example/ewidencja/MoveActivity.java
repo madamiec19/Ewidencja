@@ -116,7 +116,7 @@ public class MoveActivity extends AppCompatActivity{
         /*final ProgressBar progressBar = (ProgressBar) findViewById(R.id.progressbar);
         progressBar.setVisibility(View.VISIBLE);*/
 
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, "gsheet url here",
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, "script url here",
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
