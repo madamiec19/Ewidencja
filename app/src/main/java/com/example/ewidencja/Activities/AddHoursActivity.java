@@ -1,6 +1,9 @@
-package com.example.ewidencja;
+package com.example.ewidencja.Activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 
 import android.app.DatePickerDialog;
 import android.graphics.Color;
@@ -11,22 +14,36 @@ import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.example.ewidencja.Database.MoveViewModel;
+import com.example.ewidencja.R;
 
 import java.text.DateFormat;
 import java.util.Calendar;
 
-public class AddHours extends AppCompatActivity {
+public class AddHoursActivity extends AppCompatActivity {
 
-    private static final String TAG = "AddHours";
+    private static final String TAG = "AddHoursActivity";
 
     private TextView mDisplayDate;
     private DatePickerDialog.OnDateSetListener mDateSetListener;
     private Button btnCalculate;
+    private MoveViewModel moveViewModel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_hours);
+
+        moveViewModel = ViewModelProviders.of(this).get(MoveViewModel.class);
+        moveViewModel.getValueSum().observe(this, new Observer<Double>() {
+            @Override
+            public void onChanged(Double aDouble) {
+                Toast.makeText(getApplicationContext(), "Suma: " + aDouble, Toast.LENGTH_LONG).show();
+            }
+        });
+
 
         btnCalculate = (Button) findViewById(R.id.btnCalculate);
 
@@ -53,7 +70,7 @@ public class AddHours extends AppCompatActivity {
                 int month = cal.get(Calendar.MONTH);
                 int day = cal.get(Calendar.DAY_OF_MONTH);
 
-                DatePickerDialog dialog = new DatePickerDialog(AddHours.this, android.R.style.Theme_Holo_Dialog_MinWidth, mDateSetListener ,year, month, day);
+                DatePickerDialog dialog = new DatePickerDialog(AddHoursActivity.this, android.R.style.Theme_Holo_Dialog_MinWidth, mDateSetListener ,year, month, day);
 
                 dialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 dialog.show();

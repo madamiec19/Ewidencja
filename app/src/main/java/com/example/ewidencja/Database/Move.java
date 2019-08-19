@@ -10,6 +10,10 @@ public class Move {
     @PrimaryKey(autoGenerate = true)
     private int id;
 
+    private String hour;
+
+    private String date;
+
     private String car;
 
     private int kmStart;
@@ -32,10 +36,13 @@ public class Move {
     public void setId(int id) {
         this.id = id;
     }
+
     public Move(){}
 
-    public Move(String car, int kmStart, int kmStop, boolean[] moveTypes, String driver, String route, String comment) {
+    public Move(String car, String hour, String date, int kmStart, int kmStop, boolean[] moveTypes, String driver, String route, String comment) {
         this.car = car;
+        this.hour = hour;
+        this.date = date;
         this.kmStart = kmStart;
         this.kmStop = kmStop;
         this.moveTypes = moveTypes;
@@ -45,7 +52,22 @@ public class Move {
         setValue();
         setMoveTypesString();
     }
-    
+
+    public String getHour() {
+        return hour;
+    }
+
+    public void setHour(String hour) {
+        this.hour = hour;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
 
     private void setMoveTypesString(){
         moveTypesString = "";

@@ -11,11 +11,13 @@ import java.util.List;
 public class MoveViewModel extends AndroidViewModel {
     private MoveRepository repository;
     private LiveData<List<Move>> allMoves;
+    private LiveData<Double> valueSum;
 
     public MoveViewModel(@NonNull Application application) {
         super(application);
         repository = new MoveRepository(application);
         allMoves = repository.getAllMoves();
+        valueSum = repository.getValueSum();
     }
 
     public void insert(Move move){
@@ -37,4 +39,6 @@ public class MoveViewModel extends AndroidViewModel {
     public LiveData<List<Move>> getAllMoves(){
         return allMoves;
     }
+
+    public LiveData<Double> getValueSum() {return valueSum;}
 }

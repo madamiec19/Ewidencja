@@ -12,38 +12,44 @@ public class MoveRepository {
 
     private MoveDao moveDao;
     private LiveData<List<Move>> allMoves;
+    private LiveData<Double> valueSum;
 
 
-    public MoveRepository(Application application){
+    public MoveRepository(Application application) {
         MoveDatabase database = MoveDatabase.getInstance(application);
         moveDao = database.moveDao();
         allMoves = moveDao.getAllMoves();
+        valueSum = moveDao.getValueSum();
     }
 
-    public void insert(Move move){
+    public void insert(Move move) {
         new InsertMoveAsyncTask(moveDao).execute(move);
     }
 
-    public void update(Move move){
+    public void update(Move move) {
         new UpdateMoveAsyncTask(moveDao).execute(move);
     }
 
-    public void delete(Move move){
+    public void delete(Move move) {
         new DeleteMoveAsyncTask(moveDao).execute(move);
     }
 
-    public void deleteAllMoves(){
+    public void deleteAllMoves() {
         new DeleteAllMovesAsyncTask(moveDao).execute();
     }
 
-    public LiveData<List<Move>> getAllMoves(){
+    public LiveData<List<Move>> getAllMoves() {
         return allMoves;
     }
 
-    private static class InsertMoveAsyncTask extends AsyncTask<Move, Void, Void>{
+    public LiveData<Double> getValueSum() {
+        return valueSum;
+    }
+
+    private static class InsertMoveAsyncTask extends AsyncTask<Move, Void, Void> {
         private MoveDao moveDao;
 
-        private InsertMoveAsyncTask(MoveDao moveDao){
+        private InsertMoveAsyncTask(MoveDao moveDao) {
             this.moveDao = moveDao;
         }
 
@@ -54,10 +60,10 @@ public class MoveRepository {
         }
     }
 
-    private static class UpdateMoveAsyncTask extends AsyncTask<Move, Void, Void>{
+    private static class UpdateMoveAsyncTask extends AsyncTask<Move, Void, Void> {
         private MoveDao moveDao;
 
-        private UpdateMoveAsyncTask(MoveDao moveDao){
+        private UpdateMoveAsyncTask(MoveDao moveDao) {
             this.moveDao = moveDao;
         }
 
@@ -68,10 +74,10 @@ public class MoveRepository {
         }
     }
 
-    private static class DeleteMoveAsyncTask extends AsyncTask<Move, Void, Void>{
+    private static class DeleteMoveAsyncTask extends AsyncTask<Move, Void, Void> {
         private MoveDao moveDao;
 
-        private DeleteMoveAsyncTask(MoveDao moveDao){
+        private DeleteMoveAsyncTask(MoveDao moveDao) {
             this.moveDao = moveDao;
         }
 
@@ -82,10 +88,10 @@ public class MoveRepository {
         }
     }
 
-    private static class DeleteAllMovesAsyncTask extends AsyncTask<Void, Void, Void>{
+    private static class DeleteAllMovesAsyncTask extends AsyncTask<Void, Void, Void> {
         private MoveDao moveDao;
 
-        private DeleteAllMovesAsyncTask(MoveDao moveDao){
+        private DeleteAllMovesAsyncTask(MoveDao moveDao) {
             this.moveDao = moveDao;
         }
 
@@ -95,4 +101,5 @@ public class MoveRepository {
             return null;
         }
     }
+
 }

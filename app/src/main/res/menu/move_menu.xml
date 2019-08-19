@@ -5,4 +5,8 @@
         android:id="@+id/delete_all_moves"
         android:title="Usuń wszystkie ruchy"
         app:showAsAction="never"/>
+    <item
+        android:id="@+id/showEveryMove"
+        android:title="Pokaż ewidencję pojazdów"
+        app:showAsAction="never"/>
 </menu>

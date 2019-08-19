@@ -14,10 +14,7 @@ import android.widget.Spinner;
 import androidx.appcompat.app.AppCompatDialogFragment;
 
 import com.example.ewidencja.Globals;
-import com.example.ewidencja.MainActivity;
 import com.example.ewidencja.R;
-
-import java.util.ArrayList;
 
 public class InitialDialog extends AppCompatDialogFragment implements AdapterView.OnItemSelectedListener {
     private Spinner spinner;

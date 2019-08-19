@@ -1,5 +1,6 @@
 //noinspection GradleCompatible
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
 
 android {
     compileSdkVersion 29
@@ -24,6 +25,7 @@ dependencies {
     def lifecycle_version = "1.1.1"
     def room_version = "1.1.1"
     implementation "android.arch.lifecycle:extensions:$lifecycle_version"
+    implementation 'com.google.firebase:firebase-auth:16.0.5'
     annotationProcessor "android.arch.lifecycle:compiler:$lifecycle_version"
 
     implementation "android.arch.persistence.room:runtime:$room_version"

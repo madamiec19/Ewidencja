@@ -26,4 +26,10 @@ public interface MoveDao {
 
     @Query("SELECT * FROM move_table ORDER BY id DESC")
     LiveData<List<Move>> getAllMoves();
+
+    @Query("SELECT COUNT(id) FROM move_table")
+    LiveData<Integer> getRowCount();
+
+    @Query("SELECT sum(value) From move_table")
+    LiveData<Double> getValueSum();
 }
